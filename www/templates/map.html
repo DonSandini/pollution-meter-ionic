@@ -1,0 +1,38 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">{{ location }}</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModalMap()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content class="map-container">
+    <div class="map-item" data-map="true"></div>
+    <div class="breezometer" data-breeze="container"></div>
+    <div class="breezometer-data" data-breeze="data">
+      <div class="row breezometer-error" data-breeze="error">
+      </div>
+      <div class="row">
+        <div class="breezometer-label">Country:</div>
+        <div class="breezometer-info" data-breeze="country"></div>
+      </div>
+      <div class="row">
+        <div class="breezometer-label">Country pollution:</div>
+        <div class="breezometer-info country-clr" data-breeze="country-clr"></div>
+      </div>
+      <div class="row">
+        <div class="breezometer-label">Main pollutant:</div>
+        <div class="breezometer-info" data-breeze="pollutant-main"></div>
+      </div>
+      <div class="row">
+        <div class="breezometer-label">Pollutant effects:</div>
+        <div class="breezometer-info" data-breeze="pollutant-effects"></div>
+      </div>
+      <div class="row">
+        <div class="breezometer-label">Pollutant causes:</div>
+        <div class="breezometer-info" data-breeze="pollutant-causes"></div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-modal-view>
+

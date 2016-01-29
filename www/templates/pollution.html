@@ -1,0 +1,16 @@
+<ion-view view-title="Pollution">
+  <ion-content>
+    <div class="list list-inset">
+      <h4 class="title">Type in a city to see its pollution state.Note that the application supports limited list of cities.</h4>
+    </div>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" data-search="input">
+      </label>
+      <button ng-click="changeCity()" data-search="trigger" class="button button-block button-positive">
+        Search
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

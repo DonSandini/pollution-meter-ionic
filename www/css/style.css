@@ -1,0 +1,112 @@
+/* Empty. Add your own CSS if you like */
+.map-container .scroll {
+  height: 100%;
+}
+.map-item {
+  height: 100%;
+  z-index: 5;
+  position: relative;
+}
+.breezometer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  float: left;
+  z-index: 20;
+  top:0;
+  left:0;
+  opacity:0.4;
+}
+
+.breezometer-data {
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 25;
+  padding: 20px;
+  width: 100%;
+}
+.breezometer-data .row {
+  width: 100%;
+  float: left;
+  clear: both;
+  margin-top: 20px;
+  padding: 10px;
+  background: rgba(255 , 255 , 255 , 0.8);
+  display: block;
+}
+.breezometer-data .row:first-child ,
+.breezometer-data .row:nth-child(2) {
+  margin-top: 0;
+}
+
+.breezometer-label {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  float: left;
+}
+.breezometer-info {
+  width: 100%;
+  display: block;
+  float: left;
+  text-align: center;
+}
+.breezometer-info.country-clr {
+  margin-top: 10px;
+  height: 20px;
+}
+.breezometer-data .breezometer-error {
+  display: none;
+  font-emphasize: 2rem;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #e42112;
+}
+
+.overlay {
+  position: fixed;
+  top:0;
+  left:0;
+  background: transparent;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all ease-in-out 500ms;
+  -moz-transition: all ease-in-out 500ms;
+  -o-transition: all ease-in-out 500ms;
+  transition: all ease-in-out 500ms;
+}
+.overlay.visible {
+  z-index: 100;
+  background: rgba(0 , 0 , 0 , 0.8);
+}
+.breezometer-loader {
+  stroke: #ef473a;
+  fill: #ef473a;
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  top:50%;
+  left:50%;
+  margin-left: -50px;
+  margin-right: -50px;
+}
+.breezometer-loader svg {
+  width: 100px;
+  height: 100px;
+  -webkit-transition: all ease-in-out 500ms;
+  -moz-transition: all ease-in-out 500ms;
+  -o-transition: all ease-in-out 500ms;
+  transition: all ease-in-out 500ms;
+}
+
+.overlay .spinner.spinner-assertive {
+  stroke: transparent;
+  fill: transparent;
+}
+.overlay.visible .spinner.spinner-assertive {
+  stroke: cyan;
+  fill: cyan;
+}
