@@ -101,7 +101,12 @@ angular.module('starter.controllers', [])
           elmBreezeCountryClr = document.querySelector('[data-breeze=country-clr]'),
           elmBreezePollutant = document.querySelector('[data-breeze=pollutant-main]'),
           elmBreezePollutantE = document.querySelector('[data-breeze=pollutant-effects]'),
-          elmBreezePollutantC = document.querySelector('[data-breeze=pollutant-causes]');
+          elmBreezePollutantC = document.querySelector('[data-breeze=pollutant-causes]'),
+          elmBreezePollutantInfoKids = document.querySelector('[data-breeze=pollutant-info-kids]'),
+          elmBreezePollutantInfoHealth = document.querySelector('[data-breeze=pollutant-info-health]'),
+          elmBreezePollutantInfoOutside = document.querySelector('[data-breeze=pollutant-info-outside]'),
+          elmBreezePollutantInfoInside = document.querySelector('[data-breeze=pollutant-info-inside]'),
+          elmBreezePollutantInfoSport = document.querySelector('[data-breeze=pollutant-info-sport]');
         if( response.data.hasOwnProperty(['error'])) {
           elmBreezeError.innerHTML = response.data.error.message;
           elmBreezeError.style.display = 'block';
@@ -112,6 +117,12 @@ angular.module('starter.controllers', [])
           elmBreezePollutant.innerHTML = response.data.dominant_pollutant_text.main;
           elmBreezePollutantE.innerHTML = response.data.dominant_pollutant_text.effects;
           elmBreezePollutantC.innerHTML = response.data.dominant_pollutant_text.causes;
+
+          elmBreezePollutantInfoKids.innerHTML = response.data.random_recommendations.children;
+          elmBreezePollutantInfoHealth.innerHTML = response.data.random_recommendations.health;
+          elmBreezePollutantInfoOutside.innerHTML = response.data.random_recommendations.outside;
+          elmBreezePollutantInfoInside.innerHTML = response.data.random_recommendations.inside;
+          elmBreezePollutantInfoSport.innerHTML = response.data.random_recommendations.sport;
         }
         $scope.loaderRemove($scope.loader);
       };
