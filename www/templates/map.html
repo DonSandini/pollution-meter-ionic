@@ -7,52 +7,55 @@
   </ion-header-bar>
   <ion-content class="map-container">
     <div class="map-item" data-map="true"></div>
-    <div class="breezometer" data-breeze="container"></div>
+    <div class="breezometer" data-breeze="container" ng-style="{background: containerBackground}"></div>
     <div class="breezometer-data" data-breeze="data">
-      <div class="row breezometer-error" data-breeze="error">
+      <div class="row breezometer-error" data-breeze="error" ng-style="{display: errorDisplayMode}">
+        {{ error }}
       </div>
       <div class="row">
-        <div class="breezometer-label">Държава:</div>
-        <div class="breezometer-info" data-breeze="country"></div>
+        <div class="breezometer-label">Country:</div>
+        <div class="breezometer-info" data-breeze="country">
+          {{ breezoCountry }}
+        </div>
       </div>
       <div class="row">
-        <div class="breezometer-label">Държава - замърсяване</div>
-        <div class="breezometer-info country-clr" data-breeze="country-clr"></div>
+        <div class="breezometer-label">Country - pollution</div>
+        <div class="breezometer-info country-clr" data-breeze="country-clr" ng-style="{ background: containerBackground }"></div>
       </div>
       <div class="row">
-        <div class="breezometer-label">Главен замърсител:</div>
-        <div class="breezometer-info" data-breeze="pollutant-main"></div>
+        <div class="breezometer-label">Dominant pollutant:</div>
+        <div class="breezometer-info" data-breeze="pollutant-main">{{ dominantPollutant }}</div>
       </div>
       <div class="row">
-        <div class="breezometer-label">Ефекти от замърсяването:</div>
-        <div class="breezometer-info" data-breeze="pollutant-effects"></div>
+        <div class="breezometer-label">Pollution effects:</div>
+        <div class="breezometer-info" data-breeze="pollutant-effects">{{ pollutionEffects }}</div>
       </div>
       <div class="row">
-        <div class="breezometer-label">Причини за замърсяването:</div>
-        <div class="breezometer-info" data-breeze="pollutant-causes"></div>
+        <div class="breezometer-label">Pollution sources:</div>
+        <div class="breezometer-info" data-breeze="pollutant-causes">{{ pollutionSources }}</div>
       </div>
       <div class="row">
-        <div class="breezometer-label">Полезна информация:</div>
+        <div class="breezometer-label">Population advices:</div>
         <div class="breezometer-info" data-breeze="pollutant-info">
           <p>
-            <span class="bold">За деца:</span>
-            <span data-breeze="pollutant-info-kids"></span>
+            <span class="bold">Children:</span>
+            <span data-breeze="pollutant-info-kids">{{ pollutionInfoChildren }}</span>
           </p>
           <p>
-            <span class="bold">Здраве:</span>
-            <span data-breeze="pollutant-info-health"></span>
+            <span class="bold">Health:</span>
+            <span data-breeze="pollutant-info-health">{{ pollutionInfoHealth }}</span>
           </p>
           <p>
-            <span class="bold">Вкъщи:</span>
-            <span data-breeze="pollutant-info-inside"></span>
+            <span class="bold">At home:</span>
+            <span data-breeze="pollutant-info-inside">{{ pollutionInfoInside }}</span>
           </p>
           <p>
-            <span class="bold">Навън:</span>
-            <span data-breeze="pollutant-info-outside"></span>
+            <span class="bold">Outside:</span>
+            <span data-breeze="pollutant-info-outside">{{ pollutionInfoOutside }}</span>
           </p>
           <p>
-            <span class="bold">Спорт:</span>
-            <span data-breeze="pollutant-info-sport"></span>
+            <span class="bold">Sorts:</span>
+            <span data-breeze="pollutant-info-sport">{{ pollutionInfoSports }}</span>
           </p>
         </div>
       </div>

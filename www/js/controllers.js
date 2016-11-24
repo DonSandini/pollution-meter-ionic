@@ -64,7 +64,7 @@ angular.module('starter.controllers', [])
 
     var APIpollution = {};
     APIpollution.getInfo = function(selectCity , successCallback , errorCallback) {
-      return $http.get('https://api.breezometer.com/baqi/?location='+selectCity+'&key=7d47bdacd8f147f8bee081b7f3728fa9').then(successCallback, errorCallback);
+      return $http.get('https://api.breezometer.com/baqi/?location='+selectCity+'&key=84a75c0b1f9c4d219def51b57dcd0894').then(successCallback, errorCallback);
     };
     return APIpollution;
 
@@ -80,69 +80,69 @@ angular.module('starter.controllers', [])
 
   })
 
-
   .controller('PollutionCtrl' , function ($scope, PollutionService, GeoService , $ionicModal ) {
-    //$scope.mapsAPI = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBNtbs3EtgleOH_pnrpUx6KPJLeKf4YzPM';
+    function mapInitialState($scope) {
+      $scope.error = '';
+      $scope.errorDisplayMode = 'none';
+      $scope.containerBackground = '#ffffff';
+  }
     $scope.selectCity = document.querySelector('[data-search=input]');
     $scope.loader = document.querySelector('[data-breeze=overlay]');
-    $scope.header = 'This is a header';
+    mapInitialState($scope);
     $scope.closeModalMap = function () {
-      $scope.modalMap.remove()
+      $scope.modalMap.remove();
+      mapInitialState($scope);
     };
 
 
     $scope.initMap = function ($scope) {
       $scope.location = $scope.selectCity.value;
       var successBreeze = function(response) {
-        //debugger;
-        var elmBreezeError = document.querySelector('[data-breeze=error]'),
-          elmBreezeContainer = document.querySelector('[data-breeze=container]'),
-          elmBreezeCountry = document.querySelector('[data-breeze=country]'),
-          elmBreezeCountryClr = document.querySelector('[data-breeze=country-clr]'),
-          elmBreezePollutant = document.querySelector('[data-breeze=pollutant-main]'),
-          elmBreezePollutantE = document.querySelector('[data-breeze=pollutant-effects]'),
-          elmBreezePollutantC = document.querySelector('[data-breeze=pollutant-causes]'),
-          elmBreezePollutantInfoKids = document.querySelector('[data-breeze=pollutant-info-kids]'),
-          elmBreezePollutantInfoHealth = document.querySelector('[data-breeze=pollutant-info-health]'),
-          elmBreezePollutantInfoOutside = document.querySelector('[data-breeze=pollutant-info-outside]'),
-          elmBreezePollutantInfoInside = document.querySelector('[data-breeze=pollutant-info-inside]'),
-          elmBreezePollutantInfoSport = document.querySelector('[data-breeze=pollutant-info-sport]');
         if( response.data.hasOwnProperty(['error'])) {
-          elmBreezeError.innerHTML = response.data.error.message;
-          elmBreezeError.style.display = 'block';
-        } else {
-          elmBreezeContainer.style.backgroundColor = response.data.breezometer_color;
-          elmBreezeCountry.innerHTML = response.data.country_name;
-          elmBreezeCountryClr.style.background = response.data.country_color;
-          elmBreezePollutant.innerHTML = response.data.dominant_pollutant_text.main;
-          elmBreezePollutantE.innerHTML = response.data.dominant_pollutant_text.effects;
-          elmBreezePollutantC.innerHTML = response.data.dominant_pollutant_text.causes;
+          $scope.error = response.data.error.message;
+          $scope.errorDisplayMode = 'block';
 
-          elmBreezePollutantInfoKids.innerHTML = response.data.random_recommendations.children;
-          elmBreezePollutantInfoHealth.innerHTML = response.data.random_recommendations.health;
-          elmBreezePollutantInfoOutside.innerHTML = response.data.random_recommendations.outside;
-          elmBreezePollutantInfoInside.innerHTML = response.data.random_recommendations.inside;
-          elmBreezePollutantInfoSport.innerHTML = response.data.random_recommendations.sport;
+        } else {
+          $scope.containerBackground = response.data.breezometer_color;
+
+          $scope.breezoCountry = response.data.country_name;
+          $scope.countryBackground = response.data.country_color;
+
+          $scope.dominantPollutant = response.data.dominant_pollutant_text.main;
+          $scope.pollutionEffects = response.data.dominant_pollutant_text.effects;
+          $scope.pollutionSources = response.data.dominant_pollutant_text.causes;
+
+          $scope.pollutionInfoChildren = response.data.random_recommendations.children;
+          $scope.pollutionInfoHealth = response.data.random_recommendations.health;
+          $scope.pollutionInfoOutside = response.data.random_recommendations.outside;
+          $scope.pollutionInfoInside = response.data.random_recommendations.inside;
+          $scope.pollutionInfoSports = response.data.random_recommendations.sport;
         }
         $scope.loaderRemove($scope.loader);
       };
-      var errorBreeze = function(response) {
+      var errorBreeze = function() {
         $scope.loaderRemove($scope.loader);
       };
 
       var successMap = function (response) {
-        var location = response.data.results[0],
-          mapContainer = document.querySelector('[data-map=true]'),
-          map;
-        map = new google.maps.Map(mapContainer, {
-          center: {lat: location.geometry.location.lat, lng: location.geometry.location.lng},
-          zoom: 12
-        });
-        PollutionService.getInfo($scope.location , successBreeze , errorBreeze);
+        if (response.data.results.length > 0) {
+          var location = response.data.results[0],
+            mapContainer = document.querySelector('[data-map=true]'),
+            map;
+          map = new google.maps.Map(mapContainer, {
+            center: {lat: location.geometry.location.lat, lng: location.geometry.location.lng},
+            zoom: 3
+          });
+          PollutionService.getInfo($scope.location , successBreeze , errorBreeze);
+        } else {
+          $scope.error = 'No such city exists.';
+          $scope.errorDisplayMode = 'block';
+          $scope.loaderRemove($scope.loader);
+        }
       };
 
       var errorMap = function (data) {
-        debugger;
+        console.log(data)
         $scope.loaderRemove($scope.loader);
       };
 
@@ -152,13 +152,21 @@ angular.module('starter.controllers', [])
       }).then(function(modal) {
         $scope.modalMap = modal;
         $scope.modalMap.show().then(function () {
-          GeoService.getInfo($scope.location , successMap , errorMap);
+          try {
+            GeoService.getInfo($scope.location , successMap , errorMap);
+          } catch(error) {
+            console.log(error)
+          }
         });
       });
 
     };
 
     $scope.changeCity = function() {
+      if ($scope.selectCity.value === '') {
+        return;
+      }
+
       $scope.loaderInit($scope.loader);
       $scope.initMap($scope);
     };
